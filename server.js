@@ -11,6 +11,7 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+let householdRouter = require('./routes/household');
 
 var app = express();
 const port = process.env.PORT || 5000;
@@ -37,6 +38,7 @@ connection.once('open', () => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/household', householdRouter);
 
 
 
@@ -54,6 +56,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
 });
 
 module.exports = app;
