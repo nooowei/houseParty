@@ -12,6 +12,7 @@ require('dotenv').config();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 let householdRouter = require('./routes/household');
+let chorusRouter = require('./routes/chorus');
 
 var app = express();
 const port = process.env.PORT || 5000;
@@ -39,6 +40,7 @@ connection.once('open', () => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/household', householdRouter);
+app.use('/chorus', chorusRouter);
 
 
 

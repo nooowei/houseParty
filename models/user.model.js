@@ -6,11 +6,12 @@ const userSchema = new Schema({
   name:{type: String, required: true},
   nickname:{type: String},
   address:{type: String, required: true},
-  chorus:{type: {}, default: {}},
+  chorusAssigned:{type: [], default: []},
+  chorusTodo:{type:[], default:[]},
   password:{type:String, required: true},
   email:{type:String, required: true}
 })
 
 const User = mongoose.model('User', userSchema);
 
-export default User;
+module.exports = User;
