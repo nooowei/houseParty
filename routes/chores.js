@@ -8,24 +8,24 @@ let User = require('../models/user.model');
 // });
 
 
-// route for add chorus
+// route for add chores
 router.post('/add/:id', function(req, res, next){
   let id = req.params.id;
-  let chorusArr = req.query.chorus;
+  let choresArr = req.query.chores;
   // this needs to be an array when send into DB
-  chorusArr = chorusArr.split(",");// needs change when using front end
-  console.log(chorusArr);
+  choresArr = choresArr.split(",");// needs change when using front end
+  console.log(choresArr);
 
   Household.findById(id).then(house => {
     if(house){
       house.name = house.name;
       house.address = house.address;
       house.members = house.members;
-      house.chorusTodo = [...house.chorusTodo, ...chorusArr];
+      house.choresTodo = [...house.choresTodo, ...choresArr];
 
       house.save().then(() => {
-        console.log(`Added chorus to ${house.name} successfully!`);
-        res.json(`Added Chorus to ${house.name} successfully!`);
+        console.log(`Added chores to ${house.name} successfully!`);
+        res.json(`Added Chores to ${house.name} successfully!`);
       })
       // res.json({msg: "House name taken, be more clever!"});
     }else{
@@ -36,29 +36,29 @@ router.post('/add/:id', function(req, res, next){
 
 router.post('/delete/:id', function(req, res, next){
   let id = req.params.id;
-  let chorus = req.query.chorus; // just a string
+  let chores = req.query.chores; // just a string
   // pre check to increase performance
-  if(typeof chorus === "undefined"){
-    res.json({msg: "Chorus not found."});
+  if(typeof chores === "undefined"){
+    res.json({msg: "Chores not found."});
   }
 
   Household.findById(id).then(house => {
     if(house){
-      let oldChorusArr = house.chorusTodo;
-      let newChorusArr = [];
-      for(let i=0; i<oldChorusArr.length; i++){
-        if(oldChorusArr[i] !== chorus){
-          newChorusArr.push(oldChorusArr[i]);
+      let oldChoresArr = house.choresTodo;
+      let newChoresArr = [];
+      for(let i=0; i<oldChoresArr.length; i++){
+        if(oldChoresArr[i] !== chores){
+          newChoresArr.push(oldChoresArr[i]);
         }
       }
       house.name = house.name;
       house.address = house.address;
       house.members = house.members;
-      house.chorusTodo = newChorusArr;
+      house.choresTodo = newChoresArr;
 
       house.save().then(() => {
-        console.log(`Deleted 1 chorus from ${house.name} successfully!`);
-        res.json(`Deleted 1 Chorus from ${house.name} successfully!`);
+        console.log(`Deleted 1 chores from ${house.name} successfully!`);
+        res.json(`Deleted 1 Chores from ${house.name} successfully!`);
       })
       // res.json({msg: "House name taken, be more clever!"});
     }else{
@@ -69,31 +69,31 @@ router.post('/delete/:id', function(req, res, next){
 
 router.post('/assign/:id', function(req, res, next){
   let id = req.params.id;
-  // get chorus and user name
-  let {chorus, name} = req.query; // just a string
+  // get chores and user name
+  let {chores, name} = req.query; // just a string
   // pre check to increase performance
-  if(typeof chorus === "undefined"){
-    res.json({msg: "Chorus not found."});
+  if(typeof chores === "undefined"){
+    res.json({msg: "Chores not found."});
   }
 
   Household.findById(id).then(house => {
     if(house){
-      let oldChorusArr = house.chorusTodo;
-      let newChorusArr = [];
-      for(let i=0; i<oldChorusArr.length; i++){
-        if(oldChorusArr[i] !== chorus){
-          newChorusArr.push(oldChorusArr[i]);
+      let oldChoresArr = house.choresTodo;
+      let newChoresArr = [];
+      for(let i=0; i<oldChoresArr.length; i++){
+        if(oldChoresArr[i] !== chores){
+          newChoresArr.push(oldChoresArr[i]);
         }
       }
       house.name = house.name;
       house.address = house.address;
       house.members = house.members;
-      house.chorusTodo = newChorusArr;
-      house.chorusAssigned = [...house.chorusAssigned, chorus];
+      house.choresTodo = newChoresArr;
+      house.choresAssigned = [...house.choresAssigned, chores];
 
       house.save().then(() => {
-        console.log(`Deleted 1 chorus from ${house.name} successfully!`);
-        res.json(`Deleted 1 Chorus from ${house.name} successfully!`);
+        console.log(`Deleted 1 chores from ${house.name} successfully!`);
+        res.json(`Deleted 1 Chores from ${house.name} successfully!`);
       })
       // res.json({msg: "House name taken, be more clever!"});
     }else{

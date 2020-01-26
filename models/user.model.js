@@ -6,8 +6,8 @@ const userSchema = new Schema({
   name:{type: String, required: true},
   nickname:{type: String},
   address:{type: String, required: true},
-  chorusAssigned:{type: [], default: []},
-  chorusTodo:{type:[], default:[]},
+  choresAssigned:{type: [], default: []},
+  choresTodo:{type:[], default:[]},
   password:{type:String, required: true},
   email:{type:String, required: true}
 })
