@@ -3,23 +3,10 @@ let router = express.Router();
 let Household = require('../models/household.model');
 let User = require('../models/user.model');
 
-// return a list of chores
-router.get('/:id', function(req, res, next) {
-  let id = req.params.id;
-  Household.findById(id).then(house => {
-    if(house){
-      let choresTodo = house.choresTodo;
-      let choresAssigned = JSON.parse(house.choresAssigned);
-      let choresDone = JSON.parse(house.choresDone);
-
-      return res.json({choresTodo, choresAssigned, choresDone});
-
-      }else{
-        console.log("House not found");
-        res.json({msg: "House not found"});
-      }
-    })
-  });
+// // return the house inventory
+// router.get('/:id', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 
 // route for add chores

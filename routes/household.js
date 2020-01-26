@@ -11,7 +11,10 @@ router.get('/:id', function(req, res, next) {
       res.json({
         name: house.name,
         address: house.address,
-        chores: house.chores,
+        choresTodo: house.choresTodo,
+        choresAssigned: house.choresAssigned,
+        choresDone: house.choresDone,
+        inventory: house.inventory,
         announcements: house.announcements,
         members: house.members
       })
@@ -20,30 +23,30 @@ router.get('/:id', function(req, res, next) {
     }
   }).catch(err => console.log(err));
 
-  res.send('respond with a resource');
+  // res.send('respond with a resource');
 });
 
 //route for creating a new household
 router.post('/create', function(req,res,next){
-  let{ name, address, member } = req.query;
+  let{ name, address } = req.query;
   // console.log(name);
   // console.log(address);
   // console.log(member);
 
-  let members = [member]; //propbably will just be one
-  console.log(members);
+  // let members = [member]; //propbably will just be one
+  // console.log(members);
 
   // check for name uniqueness
   Household.findOne({name}).then(house => {
     if(house){
-      res.json({msg: "House name taken, be more clever!"});
+      return res.json({msg: "House name taken, be more clever!"});
     }
   });
 
   // check for whether it already exists
   Household.findOne({address}).then(house => {
     if(house){
-      res.json({msg: "Houseold already exist, want to join?"});
+      return res.json({msg: "Houseold already exist, want to join?"});
     }
   });
 
@@ -51,39 +54,15 @@ router.post('/create', function(req,res,next){
   const newHousehold = new Household({
     name,
     address
-    // members
-    // choresAssigned: {`${member}`:[]}
   })
 
   newHousehold.save().then(() =>{
       console.log("Household created");
-      res.json({msg: "Household created"});
+      return res.json({msg: "Household created"});
   }).catch(err => {
     console.log(err);
   })
 
-
-  // newHousehold.save().then(() =>{
-  //   // need to add the first person's name into the choresAssigned object
-  //   Household.findOne({name}).then(house =>{
-  //     let choresAssigned = house.choresAssigned;
-  //     // let newchoresAssigned = {};
-  //     choresAssigned[member] = [];
-  //
-  //     house.name = house.name;
-  //     house.address = house.address;
-  //     house.choresAssigned = choresAssigned;
-  //
-  //     house.save().then(() => {
-  //       console.log("Household created");
-  //       res.json({msg: "Household created"});
-  //     })
-  //   }).catch(err => console.log(err));
-  // }).catch(err => {
-  //   console.log(err);
-  // })
-
-  // res.json({msg:"/create route"});
 });
 
 router.post('/join/:id', function(req,res,next){

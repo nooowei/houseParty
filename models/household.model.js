@@ -7,10 +7,10 @@ const householdSchema = new Schema({
   address:{type: String, required: true},
   choresTodo:{type: [String], default: []},
   choresAssigned:{type: {}, default: {}},
-  // choresAssigned: Schema.Types.Mixed,
   choresDone:{type:{}, default:{}},
   announcements:{type:[String], default:[]},
-  members:{type:[String], default:[]}
+  members:{type:[String], default:[]},
+  inventory:{type:{}, default:{}}
 })
 
 const Household = mongoose.model('Household', householdSchema);
