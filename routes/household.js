@@ -114,12 +114,32 @@ router.post('/join/:id', function(req,res,next){
       // console.log(choresAssigned);
 
 
+      // creating a new choresDone array for each new housemember
+      let choresDone;
+      // catch block for the when the object is empty
+      try{
+        choresDone = JSON.parse(house.choresDone);
+        // console.log("try successfully")
+      }catch{
+        choresDone = house.choresDone;
+        // console.log("catch successfully")
+      }
+
+      // console.log(choresAssigned);
+      choresDone[memberName] = [];
+      // console.log(choresAssigned);
+      choresDone = JSON.stringify(choresDone);
+
+
 
       house.name = house.name;
       house.address = house.address;
       house.members = [...house.members, memberName];
       house.choresAssigned = choresAssigned;
+      house.choresDone = choresDone;
       house.markModified(choresAssigned);
+      house.markModified(choresDone);
+
 
       house.save().then(() => {
         console.log(`Joined ${house.name} successfully!`);
@@ -150,10 +170,8 @@ router.post('/removeMember/:id', function(req,res,next){
       // catch block for the when the object is empty
       try{
         choresAssigned = JSON.parse(house.choresAssigned);
-        // console.log("try successfully")
       }catch{
         choresAssigned = house.choresAssigned;
-        // console.log("catch successfully")
       }
       delete choresAssigned[memberName];
       choresAssigned = JSON.stringify(choresAssigned);
