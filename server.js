@@ -10,9 +10,12 @@ const session = require('express-session');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRouter = require('./routes/user');
 let householdRouter = require('./routes/household');
 let choresRouter = require('./routes/chores');
+let inventoryRouter = require('./routes/inventory');
+
+
 
 var app = express();
 const port = process.env.PORT || 5000;
@@ -38,10 +41,10 @@ connection.once('open', () => {
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', userRouter);
 app.use('/household', householdRouter);
 app.use('/chores', choresRouter);
-
+app.use('/inventory', inventoryRouter);
 
 
 // catch 404 and forward to error handler

@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name:{type: String, required: true},
+  username:{type: String, required: true},
   nickname:{type: String},
-  address:{type: String, required: true},
+  household:{type: String},
+  address:{type: String},
   choresAssigned:{type: [], default: []},
   choresTodo:{type:[], default:[]},
   password:{type:String, required: true},
