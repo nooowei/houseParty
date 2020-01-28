@@ -32,7 +32,7 @@ router.post('/register', function(req, res, next){
             console.log("Email already registered.");
             return res.json({msg:"Email already registered."});
         }
-    })
+    }).catch(err => console.log(err));
 
     // check if username has been taken
     User.findOne({username}).then(user => {
@@ -59,17 +59,13 @@ router.post('/register', function(req, res, next){
                         // jwt send token
                         let token = jwt.sign({_id:user._id}, process.env.TOKEN_SECRET, { expiresIn: 100000});
                         res.header('auth-token', token).send(token);
-
-
-
-
                         return res.json({msg:`New user ${username} registered successfully.`});
                     }).catch(err => console.log(err));
 
                 });
             });
         }
-    })
+    }).catch(err => console.log(err));
     
 })
 
